@@ -16,6 +16,6 @@
     </a>
   </div>
   <a href="#">
-    <img class="rounded-r-lg object-cover w-48 h-full" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
+    <img class="rounded-r-lg object-cover w-48 h-full max-h-56" src="{{ $post->image}}" alt="" />
   </a>
 </div>
