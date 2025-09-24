@@ -1,11 +1,11 @@
 <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex mb-4">
 
   <div class="p-5 flex-1">
-    <a href="#">
+    <a href="{{ route('post.show', ['username'=>$post->user->username,'post'=> $post->slug]) }}">
       <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$post->title}}</h5>
     </a>
     <div class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ Str::words($post->content,20) }}</div>
-    <a href="#">
+    <a href="{{ route('post.show', ['username'=>$post->user->username,'post'=> $post->slug]) }}">
       <x-primary-button>
 
         Read more
@@ -16,6 +16,6 @@
     </a>
   </div>
   <a href="#">
-    <img class="rounded-r-lg object-cover w-48 h-full max-h-56" src="{{ $post->image}}" alt="" />
+    <img class="rounded-r-lg object-cover w-48 h-full max-h-56" src="{{ $post->imageUrl()}}" alt="" />
   </a>
 </div>
