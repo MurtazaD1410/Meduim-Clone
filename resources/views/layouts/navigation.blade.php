@@ -13,7 +13,9 @@
 
       </div>
 
-      <div class="flex">
+      <div class="flex gap-2">
+
+        @auth
         <a href="{{ route('post.create') }}" class="flex items-center">
           <x-primary-button>
             Create Post
@@ -52,6 +54,22 @@
             </x-slot>
           </x-dropdown>
         </div>
+        @endauth
+
+        @guest
+        <div class="flex gap-2 items-center justify-center">
+          <a href="{{ route('register') }}" class="">
+            <x-secondary-button>
+              Create Account
+            </x-secondary-button>
+          </a>
+          <a href="{{ route('login') }}" class="">
+            <x-primary-button>
+              Log In
+            </x-primary-button>
+          </a>
+        </div>
+        @endguest
 
         <!-- Hamburger -->
         <div class="-me-2 flex items-center sm:hidden">
@@ -66,6 +84,7 @@
     </div>
   </div>
 
+  @auth
   <!-- Responsive Navigation Menu -->
   <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
 
@@ -94,4 +113,5 @@
       </div>
     </div>
   </div>
+  @endauth
 </nav>
