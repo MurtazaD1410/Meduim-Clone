@@ -5,11 +5,7 @@
         <h1 class="text-3xl font-extrabold mb-4">{{$post->title}}</h1>
         {{-- User avatar --}}
         <div class="flex gap-4">
-          @if ($post->user->image)
-          <img src="{{ $post->user->imageUrl() }}" class="w-10 h-10 rounded-full object-cover" alt="{{ $post->user }}">
-          @else
-          <img src="https://ui.shadcn.com/docs/components/avatar" alt="{{ $post->user->name }}">
-          @endif
+          <x-user-avatar :user="$post->user" />
           <div class="">
 
             <div class=" flex gap-2">

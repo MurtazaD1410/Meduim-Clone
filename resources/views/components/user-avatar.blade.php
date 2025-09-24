@@ -1,3 +1,7 @@
-<div>
-    <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
-</div>
+@props(['user', 'size'=>'w-12 h-12'])
+
+@if ($user->image)
+<img src="{{ $user->imageUrl() }}" class="{{ $size }} rounded-full object-cover" alt="{{ $user }}">
+@else
+<img src="https://github.com/shadcn.png" alt="{{ $user->name }}" class="{{ $size }} rounded-full object-cover">
+@endif

@@ -16,6 +16,6 @@
     </a>
   </div>
   <a href="#">
-    <img class="rounded-r-lg object-cover w-48 h-full max-h-56" src="{{ $post->imageUrl()}}" alt="" />
+    <img class="rounded-r-lg object-cover w-48 h-full max-h-60" src="{{ $post->imageUrl()}}" alt="" />
   </a>
 </div>
