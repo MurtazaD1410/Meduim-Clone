@@ -1,4 +1,4 @@
-<div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex mb-4">
+<div class="bg-white border h-fit border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 flex flex-col-reverse md:flex-row mb-4 ">
 
   <div class="p-5 flex-1">
     <a href="{{ route('post.show', ['username'=>$post->user->username,'post'=> $post->slug]) }}">
@@ -15,7 +15,9 @@
       </x-primary-button>
     </a>
   </div>
-  <a href="#">
-    <img class="rounded-r-lg object-cover w-48 h-full max-h-60" src="{{ $post->imageUrl()}}" alt="" />
-  </a>
+  <div class="md:w-2/5 ">
+    <a href="#">
+      <img class="rounded-t-lg md:rounded-tl-none md:rounded-r-lg  object-cover w-full h-full" src="{{ $post->imageUrl()}}" alt="" />
+    </a>
+  </div>
 </div>

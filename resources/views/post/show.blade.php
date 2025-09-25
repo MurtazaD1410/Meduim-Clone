@@ -11,7 +11,9 @@
             <div class=" flex gap-2">
               <a href="{{ route('profile.show', $post->user->username) }}" class="hover:underline">{{$post->user->name}}</a>
               &middot;
-              <a href="" class="text-emerald-500">Follow</a>
+              <x-follow-container :user="$post->user" class="flex gap-2">
+                <button @click="follow()" :class="following ?'text-red-500': 'text-emerald-500'" x-text="following ? 'Unfollow' : 'Follow'"></button>
+              </x-follow-container>
 
             </div>
             <div class=" flex gap-2 text-gray-500 text-sm">
