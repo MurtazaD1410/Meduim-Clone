@@ -1,6 +1,19 @@
 <x-app-layout>
   <div class="py-4">
-    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" x-data="{
+    likeCount: {{ $post->likes()->count() }},
+    hasLiked: {{ auth()->user()->hasLiked($post) ? 'true' : 'false' }},
+    like(){
+      axios.post('/like/{{ $post->id }}').then(res => {
+        this.hasLiked = !this.hasLiked
+        this.likeCount = res.data.likesCount
+      }).catch(err => {
+        this.hasLiked = !this.hasLiked
+        this.likeCount = this.hasLiked ? this.likeCount + 1 : this.likeCount - 1
+        console.log(err)
+      })
+    }
+  }">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
         <h1 class="text-3xl font-extrabold mb-4">{{$post->title}}</h1>
         {{-- User avatar --}}
@@ -25,7 +38,7 @@
         </div>
 
         {{-- clap section --}}
-        <x-like-button />
+        <x-like-button :post="$post" />
 
         {{-- blog section --}}
         <div class="">
@@ -41,7 +54,7 @@
           </span>
 
 
-          <x-like-button />
+          <x-like-button :post="$post" />
         </div>
       </div>
     </div>

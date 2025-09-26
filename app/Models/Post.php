@@ -32,6 +32,11 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -44,4 +49,5 @@ class Post extends Model
 
         return max(1, $minutes);
     }
+
 }
