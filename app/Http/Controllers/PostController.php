@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -16,9 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $user = auth()->user();
 
-        $query = Post::latest();
+        $query = Post::with(['user', 'media'])->withCount('likes')->latest();
 
         if ($user) {
             $ids = $user->following()->pluck("users.id");
@@ -104,7 +107,7 @@ class PostController extends Controller
     {
         $user = auth()->user();
 
-        $query = $category->posts()->orderBy("created_at", "desc");
+        $query = $category->posts()->with(['user', 'media'])->withCount('likes')->latest();
 
         if ($user) {
             $ids = $user->following()->pluck("users.id");
