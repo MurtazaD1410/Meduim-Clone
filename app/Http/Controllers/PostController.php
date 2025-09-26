@@ -16,8 +16,16 @@ class PostController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
 
-        $posts = Post::orderBy("created_at", "desc")->paginate(10);
+        $query = Post::latest();
+
+        if ($user) {
+            $ids = $user->following()->pluck("users.id");
+            $query->whereIn('user_id', $ids);
+        }
+
+        $posts = $query->paginate(10);
         return view("post.index", ["posts" => $posts]);
     }
 
@@ -82,9 +90,26 @@ class PostController extends Controller
         //
     }
 
+    /* public function category(Category $category)
+    {
+
+        $posts = $category->posts()->orderBy("created_at", "desc")->paginate(5);
+        return view('post.index', ['posts' => $posts]);
+    }
+        */
+
     public function category(Category $category)
     {
-        $posts = $category->posts()->orderBy("created_at", "desc")->paginate(5);
+        $user = auth()->user();
+
+        $query = $category->posts()->orderBy("created_at", "desc");
+
+        if ($user) {
+            $ids = $user->following()->pluck("users.id");
+            $query->whereIn('user_id', $ids);
+        }
+
+        $posts = $query->paginate(5);
         return view('post.index', ['posts' => $posts]);
     }
 }
