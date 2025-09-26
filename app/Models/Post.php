@@ -5,27 +5,38 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
     protected $fillable = [
         'title',
         'slug',
         'content',
-        'image',
+        // 'image',
         'category_id',
         'published_at',
         'user_id'
     ];
 
-    public function imageUrl()
+    public function registerMediaConversions(?Media $media = null): void
     {
-        if ($this->image) {
-            return Storage::url($this->image);
-        }
+        $this
+            ->addMediaConversion('preview')
+            ->width(400);
 
-        return null;
+        $this->addMediaConversion('large')
+            ->width(1200);
+    }
+
+
+    public function imageUrl($conversionName = '')
+    {
+        return $this->getFirstMedia()?->getUrl($conversionName);
     }
     public function user()
     {

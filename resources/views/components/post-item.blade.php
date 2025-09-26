@@ -17,7 +17,7 @@
   </div>
   <div class="md:w-2/5 ">
     <a href="#">
-      <img class="rounded-t-lg md:rounded-tl-none md:rounded-r-lg  object-cover w-full h-full" src="{{ $post->imageUrl()}}" alt="" />
+      <img class="rounded-t-lg md:rounded-tl-none md:rounded-r-lg  object-cover w-full h-full" src="{{ $post->imageUrl('preview')}}" alt="" />
     </a>
   </div>
 </div>

@@ -23,7 +23,7 @@
             <h3 clas>{{$user->name}}</h3>
             <p class="text-gray-500" x-text="followersCount === 1 ? '1 Follower' : followersCount + ' Followers'">
             </p>
-            <p class="">{{$user->bio}}</p>
+            <p class="text-justify">{{$user->bio}}</p>
             @if(auth()->user() && $user->id != auth()->user()->id)
             <div class="py-2">
               <button @click="follow()" class="rounded-full font-semibold px-4 py-2 border-[1.5px] " x-text="following ? 'Unfollow' : 'Follow'" :class="following ? 'border  text-red-500 border-red-500 bg-white':'bg-emerald-500 border-emerald-500 text-white  '">
