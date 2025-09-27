@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model implements HasMedia
 {
     use HasFactory;
+    use HasSlug;
     use InteractsWithMedia;
     protected $fillable = [
         'title',
@@ -33,11 +36,37 @@ class Post extends Model implements HasMedia
             ->width(1200);
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('default')->singleFile();
+
+    }
+
 
     public function imageUrl($conversionName = '')
     {
-        return $this->getFirstMedia()?->getUrl($conversionName);
+
+        $media = $this->getFirstMedia();
+        // if (!$media) {
+        //     return null;
+        // }
+        if ($media->hasGeneratedConversion($conversionName)) {
+            return $media?->getUrl($conversionName);
+        }
+
+        return $this->getFirstMediaUrl();
     }
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

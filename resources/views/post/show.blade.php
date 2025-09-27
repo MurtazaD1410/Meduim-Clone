@@ -40,6 +40,25 @@
           </div>
         </div>
 
+        @if($post->user_id=== Auth::id())
+
+
+        <div class="mt-4 py-4 border-t border-gray-200">
+          <a href="{{ route('post.edit', $post)}}">
+            <x-primary-button>
+              Edit Post
+            </x-primary-button>
+          </a>
+          <form class="inline-block" action="{{ route('post.destroy', $post) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <x-danger-button>
+              Delete Post
+            </x-danger-button>
+          </form>
+        </div>
+        @endif
+
         {{-- clap section --}}
         @auth
         <x-like-button :post="$post" />
