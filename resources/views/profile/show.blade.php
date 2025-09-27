@@ -9,7 +9,7 @@
             <h1 class="text-5xl font-extrabold">{{$user->name}}</h1>
 
             <div class="mt-8">
-              @forelse ($user->posts as $post)
+              @forelse ($posts as $post)
               <x-post-item :post="$post" />
               @empty
               <div class="">

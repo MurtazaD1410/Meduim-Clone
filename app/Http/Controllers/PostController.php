@@ -22,7 +22,7 @@ class PostController extends Controller
 
         $user = auth()->user();
 
-        $query = Post::with(['user', 'media'])->withCount('likes')->latest();
+        $query = Post::with(['user', 'media'])->where('published_at', '<=', now())->withCount('likes')->latest();
 
         if ($user) {
             $ids = $user->following()->pluck("users.id");
@@ -53,6 +53,9 @@ class PostController extends Controller
         // $image = $data['image'];
         // unset($data['image']);
         $data['user_id'] = Auth::user()->id;
+        if ($data['published_at'] == null) {
+            $data['published_at'] = now();
+        }
 
         // $imagePath = $image->store("posts", 'public');
         // $data['image'] = $imagePath;
@@ -113,7 +116,7 @@ class PostController extends Controller
             abort(403);
         }
         $post->delete();
-        return redirect()->route('dashboard')->with('success', '');
+        return redirect()->route('post.myPost')->with('success', '');
     }
 
     /* public function category(Category $category)
@@ -128,7 +131,7 @@ class PostController extends Controller
     {
         $user = auth()->user();
 
-        $query = $category->posts()->with(['user', 'media'])->withCount('likes')->latest();
+        $query = $category->posts()->where('published_at', '<=', now())->with(['user', 'media'])->withCount('likes')->latest();
 
         if ($user) {
             $ids = $user->following()->pluck("users.id");
